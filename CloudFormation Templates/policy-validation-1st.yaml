@@ -1,0 +1,16 @@
+AWSTemplateFormatVersion: "2010-09-09"
+
+Description: Creates an IAM Managed Policy for Hook testing.
+
+Resources:
+
+  rTestManagedPolicyHookDeployment:
+    Type: 'AWS::IAM::ManagedPolicy'
+    Properties:
+      Description: Managed Policy for Read Access DynamoDb, all tables
+      Path: /
+      PolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Resource: "*"

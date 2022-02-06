@@ -1,0 +1,15 @@
+{
+  "CloudFormationConfiguration": {
+    "HookConfiguration": {
+      "TargetStacks": "ALL",
+      "FailureMode": "FAIL",
+      "Properties": {
+        "languageLocale": "EN",
+        "accessAnalyzerMuteGeneralFindings": false,
+        "accessAnalyzerMuteSuggestionFindings": false,
+        "accessAnalyzerMuteSecurityFindings": false,
+        "accessAnalyzerMuteErrorFindings": false
+      }
+    }
+  }
+}
