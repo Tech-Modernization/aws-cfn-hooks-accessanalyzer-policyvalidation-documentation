@@ -1,0 +1,73 @@
+AWSTemplateFormatVersion: "2010-09-09"
+
+Description: >
+  This CloudFormation template creates 2 IAM roles to be assumed by CloudFormation
+  during Hook operations on behalf of the customer.
+  - IAM role to perform Validate Policy action with IAM Access Analyzer.
+  - IAM role to write execution logs to CloudWatch Logs.
+
+Resources:
+
+  CfnHookExecutionRole:
+    Type: AWS::IAM::Role
+    Properties:
+      MaxSessionDuration: 8400
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service:
+                - resources.cloudformation.amazonaws.com
+                - hooks.cloudformation.amazonaws.com
+            Action: sts:AssumeRole
+      Path: "/"
+      Policies:
+        - PolicyName: ContinoAccessAnalyzerPolicyValidation
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action:
+                  - "access-analyzer:ValidatePolicy"
+                Resource: "*"
+
+  CfnHookLogAndMetricsDeliveryRole:
+    Type: AWS::IAM::Role
+    Properties:
+      MaxSessionDuration: 8400
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service:
+                - resources.cloudformation.amazonaws.com
+                - hooks.cloudformation.amazonaws.com
+            Action: sts:AssumeRole
+      Path: "/"
+      Policies:
+        - PolicyName: LogAndMetricsDeliveryRolePolicy
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              - Effect: Allow
+                Action:
+                  - "logs:CreateLogGroup"
+                  - "logs:CreateLogStream"
+                  - "logs:DescribeLogGroups"
+                  - "logs:DescribeLogStreams"
+                  - "logs:PutLogEvents"
+                  - "cloudwatch:ListMetrics"
+                  - "cloudwatch:PutMetricData"
+                Resource: "*"
+
+Outputs:
+
+  CfnHookExecutionRoleArn:
+    Description: Hook Execution IAM Role Arn
+    Value: !GetAtt CfnHookExecutionRole.Arn
+
+  CfnHookLogAndMetricsDeliveryRoleArn:
+    Description: Hook Logs and Metrics IAM Role Arn
+    Value: !GetAtt CfnHookLogAndMetricsDeliveryRole.Arn
