@@ -3,7 +3,7 @@ AWS CloudFormation Public Third Party Hook Documentation
 
 This public cloudformation hook will validate your IAM policies conform AWS Best Practices.
 
-Detailed walkthrough of the hook can be found [here](https://aws.amazon.com/about-aws/whats-new/2022/02/aws-announces-general-availability-aws-cloudformation-hooks/).
+Detailed walkthrough of the hook can be found on [our blog](https://medium.com/contino-engineering/embed-iam-best-practices-with-aws-cloudformation-hooks-f36509c6aa62).
 
 ## FAQs
 ### Which region is the hook available?
